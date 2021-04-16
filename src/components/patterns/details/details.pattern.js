@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Container, Row } from "react-bootstrap";
 import styled from "styled-components";
 import HeaderBlock from "../../blocks/header/header.block";
 import DetailsBlock from "../../blocks/details/details.block";

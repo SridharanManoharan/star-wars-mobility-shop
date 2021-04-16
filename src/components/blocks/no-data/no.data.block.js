@@ -1,66 +1,56 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Alert, Button } from "react-bootstrap";
 import styled from "styled-components";
+import {
+    removeSortBy,
+    removeMinPrice,
+    removeMaxPrice,
+} from "../../../redux/actions";
 import VehicleImage from "../../../assets/vehicle.jpeg";
-import StarShipImage from "../../../assets/starship.jpeg";
 
 const Wrapper = styled.div`
+    width: 100%;
     .alert-box {
         margin-top: 30px;
     }
+    h1 {
+        color: green;
+    }
+    p {
+        margin-bottom: 20px;
+    }
 `;
 
-const DetailsWrapper = styled.div`
-    height: 60vh;
-    width: 100%;
-    background-color: #fbf7c7;
-    margin-top: 4rem;
-    padding: 1rem;
-    border-radius: 24px;
-    margin-left: auto;
-    margin-right: auto;
-`;
-
-const NoDataBlock = () => {
+const NoDataBlock = ({ type }) => {
     const starwars = useSelector((state) => state.starwars);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleOnClick = () => {
+        dispatch(removeSortBy());
+        dispatch(removeMaxPrice());
+        dispatch(removeMinPrice());
+        history.push("/");
+    };
 
     return (
         <Wrapper data-testid="noDataBlock">
             <div className="app">
                 <div className="details">
-                    <div className="big-img">
-                        <img
-                            src={
-                                details.type == "vehicle"
-                                    ? VehicleImage
-                                    : StarShipImage
-                            }
-                            alt="Details Image"
-                        />
-                    </div>
                     <div className="box">
                         <div className="row">
-                            <h2>{details.name}</h2>
+                            <h1>No Data found</h1>
+                            <p>
+                                Please search again with correct string or use
+                                the below link to navigate back to home page to
+                                see all data
+                            </p>
+                            <Button onClick={handleOnClick} variant={"warning"}>
+                                Back to home
+                            </Button>
                         </div>
-                        <p>Cost: {details.cost_in_credits}</p>
-                        <p>Crew: {details.crew}</p>
-                        <p>Passengers: {details.passengers}</p>
-                        <p>Cargo Capacity: {details.cargo_capacity}</p>
-                        <p>Consumables: {details.consumables}</p>
-                        <p>Class: {details.vehicle_class}</p>
-                        <p>Manufacturer: {details.manufacturer}</p>
-                        <Button
-                            onClick={handleFavorite}
-                            variant={favorite == true ? "danger" : "warning"}
-                            data-testid={
-                                "favorite" + details.name.replace(" ", "")
-                            }
-                        >
-                            {favorite == true
-                                ? "Remove from favorite"
-                                : "Add to favorite"}
-                        </Button>
                     </div>
                 </div>
             </div>

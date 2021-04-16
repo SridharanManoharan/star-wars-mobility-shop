@@ -14,6 +14,27 @@ const retrieveStarship = (pageNumber) => {
     };
 };
 
+const retrieve = () => {
+    return {
+        type: TYPES.RETRIEVE,
+        payload: { isLoading: true },
+    };
+};
+
+const retrieveFailure = () => {
+    return {
+        type: TYPES.RETRIEVE_FAILURE,
+        payload: { isLoading: false },
+    };
+};
+
+const retrieveSuccess = () => {
+    return {
+        type: TYPES.RETRIEVE_SUCCESS,
+        payload: { isLoading: false },
+    };
+};
+
 const searchStarship = (searchValue) => {
     return {
         type: TYPES.SEARCH_STARSHIP,
@@ -100,6 +121,9 @@ export {
     removeMaxPrice,
     removeMinPrice,
     removeSortBy,
+    retrieve,
+    retrieveFailure,
+    retrieveSuccess,
     retrieveVehicle,
     retrieveStarship,
     updateDetails,

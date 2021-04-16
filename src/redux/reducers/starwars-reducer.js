@@ -10,6 +10,7 @@ const initialState = {
     previous: "",
     resultType: "",
     pageNumber: 1,
+    isLoading: true,
 };
 
 export const starwarsReducer = (state = initialState, action) => {
@@ -55,6 +56,16 @@ export const starwarsReducer = (state = initialState, action) => {
                 ...action.payload,
             };
         case TYPES.UPDATE_DETAILS:
+            return {
+                ...state,
+                ...action.payload,
+            };
+        case TYPES.RETRIEVE_FAILURE:
+            return {
+                ...state,
+                ...action.payload,
+            };
+        case TYPES.RETRIEVE_SUCCESS:
             return {
                 ...state,
                 ...action.payload,

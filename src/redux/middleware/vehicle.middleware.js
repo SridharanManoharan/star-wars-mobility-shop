@@ -1,5 +1,11 @@
 import * as TYPES from "../../constants";
-import { genericError, updateDetails } from "../actions";
+import {
+    retrieve,
+    retrieveFailure,
+    retrieveSuccess,
+    genericError,
+    updateDetails,
+} from "../actions";
 import { retrieveStarWarsVehicle, searchStarWarsVehicle } from "../services";
 import { sortByProperty, minRange, maxRange } from "../../utils";
 
@@ -9,6 +15,7 @@ const middleware = (retrieveStarWarsVehicle, searchStarWarsVehicle) => (
     const { sortBy, minPrice, maxPrice } = store.getState().starwars;
     switch (action.type) {
         case TYPES.RETRIEVE_VEHICLE:
+            store.dispatch(retrieve());
             retrieveStarWarsVehicle(action.payload.pageNumber)
                 .then((successResponse) => {
                     const { count, next, previous } = successResponse.data;
@@ -31,12 +38,15 @@ const middleware = (retrieveStarWarsVehicle, searchStarWarsVehicle) => (
                             pageNumber: action.payload.pageNumber,
                         })
                     );
+                    store.dispatch(retrieveSuccess());
                 })
                 .catch(() => {
                     store.dispatch(genericError());
+                    store.dispatch(retrieveFailure());
                 });
             break;
         case TYPES.SEARCH_VEHICLE:
+            store.dispatch(retrieve());
             searchStarWarsVehicle(action.payload.searchValue)
                 .then((successResponse) => {
                     const { count, next, previous } = successResponse.data;
@@ -64,9 +74,11 @@ const middleware = (retrieveStarWarsVehicle, searchStarWarsVehicle) => (
                             pageNumber: 1,
                         })
                     );
+                    store.dispatch(retrieveSuccess());
                 })
                 .catch(() => {
                     store.dispatch(genericError());
+                    store.dispatch(retrieveFailure());
                 });
             break;
         default:
