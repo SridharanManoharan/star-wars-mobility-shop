@@ -1,0 +1,27 @@
+{
+  "roots": ["tests/src"],
+  "setupFilesAfterEnv": ["<rootDir>/tests/setup/setupEnzyme.js"],
+  "testPathIgnorePatterns": ["<rootDir>/tests/setup/"],
+  "transform": {
+    "^.+\\.js?$": "babel-jest"
+  },
+  "moduleNameMapper": {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css|less)$": "identity-obj-proxy"
+  },
+  "verbose": true,
+  "collectCoverage": true,
+  "coverageDirectory": "dashboard/unit-testing",
+  "collectCoverageFrom": [
+    "**/*.{js,jsx}",
+    "!**/src/redux/middleware/**",
+    "!**/node_modules/**",
+    "!**/dist/**",
+    "!**/prod/**",
+    "!**/styles/**"
+  ],
+  "coverageReporters": ["json", "lcov", "text", "cobertura", "text-summary"],
+  "coveragePathIgnorePatterns": ["/prod/", "/dist/"],
+  "snapshotSerializers": ["enzyme-to-json/serializer"],
+  "moduleFileExtensions": ["js", "jsx"]
+}
