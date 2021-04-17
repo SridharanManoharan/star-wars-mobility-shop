@@ -20,18 +20,10 @@ const sortByProperty = (arr, field) => {
         if (field === "name") {
             varA = a[field].toLowerCase();
             varB = b[field].toLowerCase();
-            let comparison = 0;
-            if (varA > varB) {
-                comparison = 1;
-            } else if (varA < varB) {
-                comparison = -1;
-            }
-            return comparison;
+            return varA > varB ? 1 : -1;
         } else {
-            varA = isNaN(a[field]) ? Infinity : a[field];
-            varB = isNaN(b[field]) ? Infinity : b[field];
-            varA = Math.round(varA);
-            varB = Math.round(varB);
+            varA = isNaN(a[field]) ? Infinity : Math.round(a[field]);
+            varB = isNaN(b[field]) ? Infinity : Math.round(b[field]);
             return varA - varB;
         }
     });

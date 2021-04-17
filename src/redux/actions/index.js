@@ -1,9 +1,9 @@
 import * as TYPES from "../../constants";
 
-const addSortBy = (sortBy) => {
+const addSortBy = (data) => {
     return {
         type: TYPES.ADD_SORT_FILTER,
-        payload: { sortBy },
+        payload: { sortBy: data },
     };
 };
 
@@ -27,17 +27,17 @@ const genericError = () => {
     };
 };
 
-const searchStarship = (searchValue) => {
+const searchStarship = (data) => {
     return {
         type: TYPES.SEARCH_STARSHIP,
-        payload: { searchValue },
+        payload: { searchValue: data },
     };
 };
 
-const searchVehicle = (searchValue) => {
+const searchVehicle = (data) => {
     return {
         type: TYPES.SEARCH_VEHICLE,
-        payload: { searchValue },
+        payload: { searchValue: data },
     };
 };
 
@@ -62,17 +62,17 @@ const retrieveSuccess = () => {
     };
 };
 
-const retrieveVehicle = (pageNumber) => {
+const retrieveVehicle = (data) => {
     return {
         type: TYPES.RETRIEVE_VEHICLE,
-        payload: { pageNumber },
+        payload: { pageNumber: data },
     };
 };
 
-const retrieveStarship = (pageNumber) => {
+const retrieveStarship = (data) => {
     return {
         type: TYPES.RETRIEVE_STARSHIP,
-        payload: { pageNumber },
+        payload: { pageNumber: data },
     };
 };
 

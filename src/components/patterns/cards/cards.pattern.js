@@ -40,7 +40,7 @@ const CardsPattern = ({ type }) => {
     return isLoading === false ? (
         filteredResults.length !== 0 ? (
             <>
-                <Container className="container-xl">
+                <Container className="container-md">
                     <FilterBlock type={type} />
                     <Row>
                         {filteredResults.map((elem, index) => {
@@ -66,7 +66,7 @@ const CardsPattern = ({ type }) => {
                 />
             </>
         ) : (
-            <Container className="container-xl">
+            <Container data-testid="noDataBlock" className="container-md">
                 <FilterBlock type={type} />
                 <Row>
                     <NoDataBlock type={type} />
@@ -74,7 +74,7 @@ const CardsPattern = ({ type }) => {
             </Container>
         )
     ) : (
-        <LoaderWrapper className="align-middle">
+        <LoaderWrapper data-testid="spinner" className="align-middle">
             <RingLoader
                 color={"#ffffff"}
                 loading={true}

@@ -48,13 +48,9 @@ const FilterBlock = ({ type }) => {
     };
 
     const handleClick = (e) => {
-        const { innerText } = e.target;
-        if (innerText !== "") {
-            dispatch(addSortBy(innerText));
-            dispatch(updateFilteredResults(starwars.filteredResults));
-        } else {
-            dispatch(removeSortBy());
-        }
+        const { id } = e.target;
+        dispatch(addSortBy(id));
+        dispatch(updateFilteredResults(starwars.filteredResults));
     };
 
     const handleMinPrice = () => {
@@ -104,21 +100,45 @@ const FilterBlock = ({ type }) => {
         <Wrapper>
             <Row>
                 <Dropdown style={{ marginLeft: "18px" }}>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <Dropdown.Toggle
+                        data-testid="filterDropdown"
+                        variant="success"
+                        id="dropdown-basic"
+                    >
                         <FaSortAmountUp /> Sort{" "}
                         {starwars.sortBy !== "" ? ":" + starwars.sortBy : ""}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={handleClick}>
+                        <Dropdown.Item
+                            name="name"
+                            id="name"
+                            data-testid="filterDropdownName"
+                            onClick={handleClick}
+                        >
                             Name
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={handleClick}>
+                        <Dropdown.Item
+                            name="passengers"
+                            id="passengers"
+                            data-testid="filterDropdownPassengers"
+                            onClick={handleClick}
+                        >
                             Passengers
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={handleClick}>
+                        <Dropdown.Item
+                            name="cost"
+                            id="cost"
+                            data-testid="filterDropdownCost"
+                            onClick={handleClick}
+                        >
                             Cost
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={handleClick}>
+                        <Dropdown.Item
+                            name="crew"
+                            id="crew"
+                            data-testid="filterDropdownCrew"
+                            onClick={handleClick}
+                        >
                             Crew
                         </Dropdown.Item>
                     </Dropdown.Menu>
@@ -127,6 +147,7 @@ const FilterBlock = ({ type }) => {
                     <Form.Row>
                         <Col>
                             <Form.Control
+                                data-testid="minInpFilter"
                                 ref={minInp}
                                 onChange={handleMinPrice}
                                 onBlur={handleMinPriceOnBlur}
@@ -140,6 +161,7 @@ const FilterBlock = ({ type }) => {
                         </Col>
                         <Col>
                             <Form.Control
+                                data-testid="maxInpFilter"
                                 ref={maxInp}
                                 onChange={handleMaxPrice}
                                 onBlur={handleMaxPriceOnBlur}

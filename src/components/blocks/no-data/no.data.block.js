@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Alert, Button } from "react-bootstrap";
 import styled from "styled-components";
@@ -24,7 +24,6 @@ const Wrapper = styled.div`
 `;
 
 const NoDataBlock = ({ type }) => {
-    const starwars = useSelector((state) => state.starwars);
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -47,7 +46,11 @@ const NoDataBlock = ({ type }) => {
                                 the below link to navigate back to home page to
                                 see all data
                             </p>
-                            <Button onClick={handleOnClick} variant={"warning"}>
+                            <Button
+                                data-testid="backToHomeBtn"
+                                onClick={handleOnClick}
+                                variant={"warning"}
+                            >
                                 Back to home
                             </Button>
                         </div>

@@ -29,7 +29,7 @@ const DetailsPattern = () => {
         <Wrapper>
             <HeaderBlock />
             <NavbarBlock />
-            <Container className="container-xl">
+            <Container className="container-md">
                 <FilterBlock type={details.type} />
                 <Row>
                     <DetailsBlock />

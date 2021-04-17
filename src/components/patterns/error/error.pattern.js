@@ -29,7 +29,7 @@ const ErrorPattern = () => {
         <Wrapper>
             <HeaderBlock />
             <NavbarBlock />
-            <ErrorBlock />
+            <ErrorBlock data-testid="errorBlock" />
         </Wrapper>
     );
 };
