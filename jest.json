@@ -1,6 +1,6 @@
 {
   "roots": ["tests/src"],
-  "setupFilesAfterEnv": ["<rootDir>/tests/setup/setupEnzyme.js"],
+  "setupFilesAfterEnv": ["<rootDir>/tests/setup/setupTest.js"],
   "testPathIgnorePatterns": ["<rootDir>/tests/setup/"],
   "transform": {
     "^.+\\.js?$": "babel-jest"
@@ -22,6 +22,5 @@
   ],
   "coverageReporters": ["json", "lcov", "text", "cobertura", "text-summary"],
   "coveragePathIgnorePatterns": ["/prod/", "/dist/"],
-  "snapshotSerializers": ["enzyme-to-json/serializer"],
   "moduleFileExtensions": ["js", "jsx"]
 }
