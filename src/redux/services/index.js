@@ -6,14 +6,14 @@ import {
     searchStarWarsVehicle,
     retrieveStarWarsVehicle,
 } from "./vehicles.service";
-import { retrieveDetailsService } from "./details.service";
+import { retrieveDetails } from "./details.service";
 
 export {
     searchStarWarsVehicle,
     searchStarWarsStarship,
     retrieveStarWarsStarship,
     retrieveStarWarsVehicle,
-    retrieveDetailsService,
+    retrieveDetails,
 };
 
 export default {};

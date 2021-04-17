@@ -2,7 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {
     searchStarWarsVehicle,
-    retrieveStarWarsVehicles,
+    retrieveStarWarsVehicle,
 } from "../../../../src/redux/services";
 import { RETRIEVE_VEHICLES_API } from "../../../../src/constants";
 
@@ -16,7 +16,7 @@ describe("Vehicles retrieveStarWarsVehicles services", () => {
             data
         );
 
-        retrieveStarWarsVehicles(pageNumber)
+        retrieveStarWarsVehicle(pageNumber)
             .then((response) => {
                 expect(response.status).toEqual(200);
                 expect(response.data).toEqual(data);
@@ -36,7 +36,7 @@ describe("Vehicles retrieveStarWarsVehicles services", () => {
             RETRIEVE_VEHICLES_API + `page=${pageNumber}`
         ).networkErrorOnce();
 
-        retrieveStarWarsVehicles(pageNumber)
+        retrieveStarWarsVehicle(pageNumber)
             .then((response) => {
                 expect(response.status).toEqual(200);
                 expect(response.data).toEqual(data);

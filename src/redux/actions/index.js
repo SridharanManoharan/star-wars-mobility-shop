@@ -1,16 +1,43 @@
 import * as TYPES from "../../constants";
 
-const retrieveVehicle = (pageNumber) => {
+const addSortBy = (sortBy) => {
     return {
-        type: TYPES.RETRIEVE_VEHICLE,
-        payload: { pageNumber },
+        type: TYPES.ADD_SORT_FILTER,
+        payload: { sortBy },
     };
 };
 
-const retrieveStarship = (pageNumber) => {
+const addMinPrice = (price) => {
     return {
-        type: TYPES.RETRIEVE_STARSHIP,
-        payload: { pageNumber },
+        type: TYPES.ADD_MIN_PRICE_FILTER,
+        payload: { minPrice: price },
+    };
+};
+
+const addMaxPrice = (price) => {
+    return {
+        type: TYPES.ADD_MAX_PRICE_FILTER,
+        payload: { maxPrice: price },
+    };
+};
+
+const genericError = () => {
+    return {
+        type: TYPES.GENERIC_ERROR,
+    };
+};
+
+const searchStarship = (searchValue) => {
+    return {
+        type: TYPES.SEARCH_STARSHIP,
+        payload: { searchValue },
+    };
+};
+
+const searchVehicle = (searchValue) => {
+    return {
+        type: TYPES.SEARCH_VEHICLE,
+        payload: { searchValue },
     };
 };
 
@@ -35,17 +62,38 @@ const retrieveSuccess = () => {
     };
 };
 
-const searchStarship = (searchValue) => {
+const retrieveVehicle = (pageNumber) => {
     return {
-        type: TYPES.SEARCH_STARSHIP,
-        payload: { searchValue },
+        type: TYPES.RETRIEVE_VEHICLE,
+        payload: { pageNumber },
     };
 };
 
-const searchVehicle = (searchValue) => {
+const retrieveStarship = (pageNumber) => {
     return {
-        type: TYPES.SEARCH_VEHICLE,
-        payload: { searchValue },
+        type: TYPES.RETRIEVE_STARSHIP,
+        payload: { pageNumber },
+    };
+};
+
+const removeSortBy = () => {
+    return {
+        type: TYPES.REMOVE_SORT_FILTER,
+        payload: { sortBy: "" },
+    };
+};
+
+const removeMinPrice = () => {
+    return {
+        type: TYPES.REMOVE_MIN_PRICE_FILTER,
+        payload: { minPrice: "" },
+    };
+};
+
+const removeMaxPrice = () => {
+    return {
+        type: TYPES.REMOVE_MAX_PRICE_FILTER,
+        payload: { maxPrice: "" },
     };
 };
 
@@ -62,54 +110,6 @@ const updateFilteredResults = (data) => {
         payload: data,
     };
 };
-
-function genericError() {
-    return {
-        type: TYPES.GENERIC_ERROR,
-    };
-}
-
-function addSortBy(sortBy) {
-    return {
-        type: TYPES.ADD_SORT_FILTER,
-        payload: { sortBy },
-    };
-}
-
-function addMinPrice(price) {
-    return {
-        type: TYPES.ADD_MIN_PRICE_FILTER,
-        payload: { minPrice: price },
-    };
-}
-
-function addMaxPrice(price) {
-    return {
-        type: TYPES.ADD_MAX_PRICE_FILTER,
-        payload: { maxPrice: price },
-    };
-}
-
-function removeSortBy() {
-    return {
-        type: TYPES.REMOVE_SORT_FILTER,
-        payload: { sortBy: "" },
-    };
-}
-
-function removeMinPrice() {
-    return {
-        type: TYPES.REMOVE_MIN_PRICE_FILTER,
-        payload: { minPrice: "" },
-    };
-}
-
-function removeMaxPrice() {
-    return {
-        type: TYPES.REMOVE_MAX_PRICE_FILTER,
-        payload: { maxPrice: "" },
-    };
-}
 
 export {
     addSortBy,

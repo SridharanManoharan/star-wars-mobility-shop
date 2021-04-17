@@ -1,6 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { retrieveDetailsService } from "../../../../src/redux/services";
+import { retrieveDetails } from "../../../../src/redux/services";
 
 describe("Details services", () => {
     test("returns status code 200 on success", (done) => {
@@ -9,7 +9,7 @@ describe("Details services", () => {
         const data = "data";
         mock.onGet(url).reply(200, data);
 
-        retrieveDetailsService(url)
+        retrieveDetails(url)
             .then((response) => {
                 expect(response.status).toEqual(200);
                 expect(response.data).toEqual(data);
@@ -27,7 +27,7 @@ describe("Details services", () => {
         const data = "data";
         mock.onGet(url).networkErrorOnce();
 
-        retrieveDetailsService(url)
+        retrieveDetails(url)
             .then((response) => {
                 expect(response.status).toEqual(200);
                 expect(response.data).toEqual(data);

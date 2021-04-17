@@ -4,7 +4,7 @@
   "description": "A web store which allows clients to browse the vehicles and starships using SWAPI api",
   "main": "src/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "start": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack",
     "test": "jest --config=jest.json --coverage --runInBand"
   },

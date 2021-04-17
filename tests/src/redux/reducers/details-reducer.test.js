@@ -12,25 +12,18 @@ describe("Test Details reducer", () => {
     });
 
     it("Should test retrieve details reducer ", () => {
-        const expected = {
-            results: [{ details: "data" }],
-            type: "dataType",
-        };
+        const expected = { results: "data" };
         const action = {
-            type: UPDATE_DETAILS,
-            payload: { details: "data" },
-            dataType: "dataType",
+            type: "UPDATE_DETAILS",
+            payload: "data",
         };
         expect(detailsReducer({}, action)).toEqual(expected);
     });
 
     it("Should test failure reducer ", () => {
-        const expected = {
-            error: [{ error: "data" }],
-        };
+        const expected = {};
         const action = {
-            type: GENERIC_ERROR,
-            payload: [{ error: "data" }],
+            type: "GENERIC_ERROR",
         };
         expect(detailsReducer({}, action)).toEqual(expected);
     });

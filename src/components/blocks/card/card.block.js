@@ -7,7 +7,7 @@ import Favorite from "../favorite/favorite-block";
 import VehicleImage from "../../../assets/vehicle.jpeg";
 import StarShipImage from "../../../assets/starship.jpeg";
 import { updateDetails } from "../../../redux/actions";
-import { retrieveDetailsService } from "../../../redux/services";
+import { retrieveDetails } from "../../../redux/services";
 
 const CardWrapper = styled.div`
     width: 20rem;
@@ -55,7 +55,7 @@ const CardBlock = ({ cardDetail, type }) => {
     };
 
     const handleOnClick = async () => {
-        const response = await retrieveDetailsService(cardDetail.url);
+        const response = await retrieveDetails(cardDetail.url);
         dispatch(updateDetails({ ...response.data, type: type }));
         history.push("/details");
     };

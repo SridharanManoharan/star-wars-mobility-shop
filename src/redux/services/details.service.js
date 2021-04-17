@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const retrieveDetailsService = (url) => {
+const retrieveDetails = (url) => {
     const config = {
         "Content-Type": "application/json;charset=UTF-8",
     };
@@ -10,6 +10,6 @@ const retrieveDetailsService = (url) => {
         .catch((error) => Promise.reject(error));
 };
 
-export { retrieveDetailsService };
+export { retrieveDetails };
 
 export default {};
