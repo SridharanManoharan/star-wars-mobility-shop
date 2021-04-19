@@ -94,8 +94,8 @@ module.exports = {
     ],
     performance: {
         hints: "warning",
-        maxAssetSize: 20000000,
-        maxEntrypointSize: 8500000,
+        maxAssetSize: 2000000,
+        maxEntrypointSize: 1000000,
         assetFilter: (assetFilename) => {
             return (
                 assetFilename.endsWith(".css") || assetFilename.endsWith(".js")
