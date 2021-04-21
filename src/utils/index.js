@@ -78,7 +78,12 @@ const minMaxRange = (arr, field, range) => {
 
 const findMaxValue = (arr) => {
     let sortedArr = arr.concat();
-    return Math.max(...sortedArr.map((elem) => elem["cost_in_credits"]), 0);
+    const maxValue = sortedArr.reduce(
+        (acc, value) =>
+            Math.max(Math.round(acc), Math.round(value.cost_in_credits)),
+        0
+    );
+    return maxValue;
 };
 
 const correctDataInArr = (arr, field) => {

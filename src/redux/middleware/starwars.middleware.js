@@ -13,6 +13,7 @@ const middleware = () => (store) => (next) => (action) => {
         case TYPES.UPDATE_FILTERED_RESULTS:
             store.dispatch(retrieve());
             let result = action.payload.concat();
+            result = correctDataInArr(result, "cost_in_credits");
             if (sortBy !== "") {
                 result = sortByProperty(
                     result,
@@ -22,14 +23,7 @@ const middleware = () => (store) => (next) => (action) => {
                 );
             }
             if (minPrice !== "" || maxPrice !== "") {
-                const maxValue = result.reduce(
-                    (acc, value) =>
-                        Math.max(
-                            Math.round(acc),
-                            Math.round(value.cost_in_credits)
-                        ),
-                    0
-                );
+                const maxValue = findMaxValue(result);
                 result = minMaxRange(result, "cost_in_credits", {
                     min: minPrice,
                     max: maxPrice,
@@ -38,10 +32,7 @@ const middleware = () => (store) => (next) => (action) => {
             }
             store.dispatch(
                 updateDetails({
-                    filteredResults: correctDataInArr(
-                        result,
-                        "cost_in_credits"
-                    ),
+                    filteredResults: result,
                 })
             );
             store.dispatch(retrieveSuccess());

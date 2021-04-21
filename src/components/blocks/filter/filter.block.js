@@ -14,6 +14,7 @@ import {
     removeMaxPrice,
     updateFilteredResults,
 } from "../../../redux/actions";
+import RangeSliderBlock from "../range-slider/range.slider.block";
 import { findMaxValue } from "../../../utils";
 
 const Wrapper = styled.div`
@@ -138,13 +139,13 @@ const FilterBlock = ({ type }) => {
                 </Dropdown>
                 <Form className="form-cost" style={{ marginLeft: "18px" }}>
                     <Form.Row>
-                        <Col>
+                        {/* <Col>
                             <Form.Control
                                 data-testid="minInpFilter"
                                 onChange={handleMinPrice}
                                 onBlur={handleMinMaxPriceOnBlur}
                                 type="number"
-                                style={{ maxWidth: "120px" }}
+                                style={{ width: "120px" }}
                                 placeholder="Min Cost"
                                 min={0}
                                 max={findMaxValue(starwars.filteredResults)}
@@ -158,12 +159,19 @@ const FilterBlock = ({ type }) => {
                                 onChange={handleMaxPrice}
                                 onBlur={handleMinMaxPriceOnBlur}
                                 type="number"
-                                style={{ maxWidth: "120px" }}
+                                style={{ width: "120px" }}
                                 placeholder="Max Cost"
                                 min={0}
                                 max={findMaxValue(starwars.filteredResults)}
                                 value={maxInp}
                                 isInvalid={maxInpInValid}
+                            />
+                        </Col> */}
+                        <Col>
+                            <RangeSliderBlock
+                                step={1000}
+                                min={0}
+                                max={findMaxValue(starwars.filteredResults)}
                             />
                         </Col>
                     </Form.Row>
