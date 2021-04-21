@@ -5,23 +5,20 @@ import {
     addMinPrice,
     retrieveVehicle,
     retrieveStarship,
-    removeMinPrice,
-    removeMaxPrice,
     updateFilteredResults,
 } from "../../../redux/actions";
-import { findMaxValue } from "../../../utils";
 
-const RangeSliderBlock = ({ step, min, max }) => {
+const RangeSliderBlock = ({ step, min, max, type }) => {
     const starwars = useSelector((state) => state.starwars);
     const dispatch = useDispatch();
-
-    const [minVal, setMinVal] = useState(0);
-    const [maxVal, setMaxVal] = useState(0);
+    const [minVal, setMinVal] = useState(min);
+    const [maxVal, setMaxVal] = useState(max);
     const range = useRef(null);
 
     useEffect(() => {
+        setMinVal(min);
         setMaxVal(max);
-    }, [max]);
+    }, []);
     useEffect(() => setLeftValue(), [minVal]);
     useEffect(() => setRightValue(), [maxVal]);
 
@@ -36,6 +33,29 @@ const RangeSliderBlock = ({ step, min, max }) => {
         }
     };
 
+    const handleRetrieve = () => {
+        if (type === "vehicle") {
+            dispatch(retrieveVehicle(starwars.pageNumber));
+        } else {
+            dispatch(retrieveStarship(starwars.pageNumber));
+        }
+    };
+
+    const handleMinOnChange = (event) => {
+        setMinVal(Math.min(Number(event.target.value), maxVal - step));
+        dispatch(addMinPrice(minVal));
+        dispatch(addMaxPrice(maxVal));
+        handleRetrieve();
+        dispatch(updateFilteredResults(starwars.filteredResults));
+    };
+
+    const handleMaxOnChange = (event) => {
+        setMaxVal(Math.max(Number(event.target.value), minVal + step));
+        dispatch(addMinPrice(minVal));
+        dispatch(addMaxPrice(maxVal));
+        handleRetrieve();
+        dispatch(updateFilteredResults(starwars.filteredResults));
+    };
     // Set width of the range to decrease from the right side
     const setRightValue = () => {
         const minPercent = getPercent(minVal);
@@ -64,11 +84,7 @@ const RangeSliderBlock = ({ step, min, max }) => {
                 max={max}
                 value={minVal}
                 step={step}
-                onChange={(event) =>
-                    setMinVal(
-                        Math.min(Number(event.target.value), maxVal - step)
-                    )
-                }
+                onChange={handleMinOnChange}
                 className="thumb thumb--left"
                 style={{ zIndex: minVal > max - 100 && "5" }}
             />
@@ -78,11 +94,7 @@ const RangeSliderBlock = ({ step, min, max }) => {
                 max={max}
                 value={maxVal}
                 step={step}
-                onChange={(event) =>
-                    setMaxVal(
-                        Math.max(Number(event.target.value), minVal + step)
-                    )
-                }
+                onChange={handleMaxOnChange}
                 className="thumb thumb--right"
             />
         </div>

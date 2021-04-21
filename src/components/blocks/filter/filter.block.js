@@ -169,9 +169,10 @@ const FilterBlock = ({ type }) => {
                         </Col> */}
                         <Col>
                             <RangeSliderBlock
+                                type={type}
                                 step={1000}
                                 min={0}
-                                max={findMaxValue(starwars.filteredResults)}
+                                max={1000000}
                             />
                         </Col>
                     </Form.Row>
