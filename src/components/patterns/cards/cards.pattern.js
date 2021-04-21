@@ -6,7 +6,7 @@ import ReactPaginate from "react-paginate";
 import CardBlock from "../../blocks/card/card.block";
 import FilterBlock from "../../blocks/filter/filter.block";
 import NoDataBlock from "../../blocks/no-data/no.data.block";
-import { retrieveVehicle } from "../../../redux/actions";
+import { retrieveVehicle, retrieveStarship } from "../../../redux/actions";
 import { Container, Row, Col } from "react-bootstrap";
 import { css } from "@emotion/core";
 import RingLoader from "react-spinners/RingLoader";
@@ -28,10 +28,18 @@ const CardsPattern = ({ type }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const handleRetrieve = (pageNumber) => {
+        if (type === "vehicle") {
+            dispatch(retrieveVehicle(pageNumber));
+        } else {
+            dispatch(retrieveStarship(pageNumber));
+        }
+    };
+
     const handlePageClick = async ({ selected }) => {
         window.scrollTo(0, 0);
         try {
-            dispatch(retrieveVehicle(selected + 1));
+            handleRetrieve(selected + 1);
         } catch (error) {
             history.push("/error");
         }

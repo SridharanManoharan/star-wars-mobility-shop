@@ -9,16 +9,18 @@ import {
 } from "../../../redux/actions";
 
 const RangeSliderBlock = ({ step, min, max, type }) => {
-    const starwars = useSelector((state) => state.starwars);
+    const { minPrice, maxPrice, pageNumber, filteredResults } = useSelector(
+        (state) => state.starwars
+    );
     const dispatch = useDispatch();
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const range = useRef(null);
 
     useEffect(() => {
-        setMinVal(min);
-        setMaxVal(max);
-    }, []);
+        setMinVal(minPrice);
+        setMaxVal(maxPrice);
+    }, [minPrice, maxPrice]);
     useEffect(() => setLeftValue(), [minVal]);
     useEffect(() => setRightValue(), [maxVal]);
 
@@ -35,9 +37,9 @@ const RangeSliderBlock = ({ step, min, max, type }) => {
 
     const handleRetrieve = () => {
         if (type === "vehicle") {
-            dispatch(retrieveVehicle(starwars.pageNumber));
+            dispatch(retrieveVehicle(pageNumber));
         } else {
-            dispatch(retrieveStarship(starwars.pageNumber));
+            dispatch(retrieveStarship(pageNumber));
         }
     };
 
@@ -46,7 +48,7 @@ const RangeSliderBlock = ({ step, min, max, type }) => {
         dispatch(addMinPrice(minVal));
         dispatch(addMaxPrice(maxVal));
         handleRetrieve();
-        dispatch(updateFilteredResults(starwars.filteredResults));
+        dispatch(updateFilteredResults(filteredResults));
     };
 
     const handleMaxOnChange = (event) => {
@@ -54,7 +56,7 @@ const RangeSliderBlock = ({ step, min, max, type }) => {
         dispatch(addMinPrice(minVal));
         dispatch(addMaxPrice(maxVal));
         handleRetrieve();
-        dispatch(updateFilteredResults(starwars.filteredResults));
+        dispatch(updateFilteredResults(filteredResults));
     };
     // Set width of the range to decrease from the right side
     const setRightValue = () => {

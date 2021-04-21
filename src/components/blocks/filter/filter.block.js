@@ -34,8 +34,8 @@ const Wrapper = styled.div`
 const FilterBlock = ({ type }) => {
     const starwars = useSelector((state) => state.starwars);
     const dispatch = useDispatch();
-    const [minInp, setMinInp] = useState("");
-    const [maxInp, setMaxInp] = useState("");
+    const [minInp, setMinInp] = useState(0);
+    const [maxInp, setMaxInp] = useState(10000000000);
     const [maxInpInValid, setMaxInpInValid] = useState(false);
     const [minInpInValid, setMinInpInValid] = useState(false);
 
@@ -53,40 +53,38 @@ const FilterBlock = ({ type }) => {
         dispatch(updateFilteredResults(starwars.filteredResults));
     };
 
-    const handleMinPrice = (e) => {
-        const { value } = e.target;
-        setMinInp(value);
-        dispatch(addMinPrice(value));
-    };
+    // const handleMinPrice = (e) => {
+    //     const { value } = e.target;
+    //     setMinInp(value);
+    //     dispatch(addMinPrice(value));
+    // };
 
-    const handleMaxPrice = (e) => {
-        const { value } = e.target;
-        setMaxInp(value);
-        dispatch(addMaxPrice(value));
-    };
+    // const handleMaxPrice = (e) => {
+    //     const { value } = e.target;
+    //     setMaxInp(value);
+    //     dispatch(addMaxPrice(value));
+    // };
 
-    const handleMinMaxPriceOnBlur = () => {
-        const { minPrice, maxPrice } = starwars;
-        const max =
-            maxPrice == "" ? findMaxValue(starwars.filteredResults) : maxPrice;
-        const min = minPrice == "" ? 0 : minPrice;
-        const checkIsValid = Math.round(min) >= Math.round(max);
-        setMinInpInValid(checkIsValid);
-        setMaxInpInValid(checkIsValid);
-        dispatch(addMinPrice(min));
-        dispatch(addMaxPrice(max));
-        handleRetrieve();
-        dispatch(updateFilteredResults(starwars.filteredResults));
-    };
+    // const handleMinMaxPriceOnBlur = () => {
+    //     const { minPrice, maxPrice } = starwars;
+    //     const max =
+    //         maxPrice == "" ? findMaxValue(starwars.filteredResults) : maxPrice;
+    //     const min = minPrice == "" ? 0 : minPrice;
+    //     const checkIsValid = Math.round(min) >= Math.round(max);
+    //     setMinInpInValid(checkIsValid);
+    //     setMaxInpInValid(checkIsValid);
+    //     dispatch(addMinPrice(min));
+    //     dispatch(addMaxPrice(max));
+    //     handleRetrieve();
+    //     dispatch(updateFilteredResults(starwars.filteredResults));
+    // };
 
     const clearFilter = () => {
-        setMinInp("");
-        setMaxInp("");
         setMinInpInValid(false);
         setMaxInpInValid(false);
         dispatch(removeSortBy());
-        dispatch(removeMaxPrice());
-        dispatch(removeMinPrice());
+        dispatch(addMaxPrice(10000000000));
+        dispatch(addMinPrice(0));
         handleRetrieve();
     };
 
@@ -171,8 +169,8 @@ const FilterBlock = ({ type }) => {
                             <RangeSliderBlock
                                 type={type}
                                 step={1000}
-                                min={0}
-                                max={1000000}
+                                min={minInp}
+                                max={maxInp}
                             />
                         </Col>
                     </Form.Row>
