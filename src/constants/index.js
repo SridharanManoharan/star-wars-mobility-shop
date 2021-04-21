@@ -3,6 +3,10 @@ export const BASE_PATH = `${window.location.origin}`;
 export const RETRIEVE_VEHICLES_API = "https://swapi.dev/api/vehicles/?";
 export const RETRIEVE_STARSHIPS_API = "https://swapi.dev/api/starships/?";
 
+// Journey Constants
+export const MIN = 0;
+export const MAX = 10000000000;
+
 // Action types
 export const ADD_SORT_FILTER = "ADD_SORT_FILTER";
 export const ADD_MIN_PRICE_FILTER = "ADD_MIN_PRICE_FILTER";
@@ -24,6 +28,8 @@ export const UPDATE_FILTERED_RESULTS = "UPDATE_FILTERED_RESULTS";
 
 export default {
     BASE_PATH,
+    MIN,
+    MAX,
     RETRIEVE_VEHICLES_API,
     RETRIEVE_STARSHIPS_API,
     ADD_SORT_FILTER,

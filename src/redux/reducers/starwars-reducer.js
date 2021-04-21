@@ -2,8 +2,8 @@ import * as TYPES from "../../constants";
 
 const initialState = {
     sortBy: "",
-    minPrice: 0,
-    maxPrice: 10000000000,
+    minPrice: TYPES.MIN,
+    maxPrice: TYPES.MAX,
     filteredResults: [],
     count: 0,
     next: "",

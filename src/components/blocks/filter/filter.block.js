@@ -16,6 +16,7 @@ import {
 } from "../../../redux/actions";
 import RangeSliderBlock from "../range-slider/range.slider.block";
 import { findMaxValue } from "../../../utils";
+import { MAX, MIN } from "../../../constants";
 
 const Wrapper = styled.div`
     margin: 20px auto 0px auto;
@@ -34,8 +35,8 @@ const Wrapper = styled.div`
 const FilterBlock = ({ type }) => {
     const starwars = useSelector((state) => state.starwars);
     const dispatch = useDispatch();
-    const [minInp, setMinInp] = useState(0);
-    const [maxInp, setMaxInp] = useState(10000000000);
+    const [minInp, setMinInp] = useState(MIN);
+    const [maxInp, setMaxInp] = useState(MAX);
     const [maxInpInValid, setMaxInpInValid] = useState(false);
     const [minInpInValid, setMinInpInValid] = useState(false);
 
@@ -83,8 +84,8 @@ const FilterBlock = ({ type }) => {
         setMinInpInValid(false);
         setMaxInpInValid(false);
         dispatch(removeSortBy());
-        dispatch(addMaxPrice(10000000000));
-        dispatch(addMinPrice(0));
+        dispatch(addMinPrice(MIN));
+        dispatch(addMaxPrice(MAX));
         handleRetrieve();
     };
 
@@ -169,8 +170,8 @@ const FilterBlock = ({ type }) => {
                             <RangeSliderBlock
                                 type={type}
                                 step={1000}
-                                min={minInp}
-                                max={maxInp}
+                                min={MIN}
+                                max={MAX}
                             />
                         </Col>
                     </Form.Row>

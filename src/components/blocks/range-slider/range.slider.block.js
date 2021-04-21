@@ -43,20 +43,19 @@ const RangeSliderBlock = ({ step, min, max, type }) => {
         }
     };
 
-    const handleMinOnChange = (event) => {
-        setMinVal(Math.min(Number(event.target.value), maxVal - step));
+    const handleOnMouseAndKeyUp = () => {
         dispatch(addMinPrice(minVal));
         dispatch(addMaxPrice(maxVal));
         handleRetrieve();
         dispatch(updateFilteredResults(filteredResults));
     };
 
+    const handleMinOnChange = (event) => {
+        setMinVal(Math.min(Number(event.target.value), maxVal - step));
+    };
+
     const handleMaxOnChange = (event) => {
         setMaxVal(Math.max(Number(event.target.value), minVal + step));
-        dispatch(addMinPrice(minVal));
-        dispatch(addMaxPrice(maxVal));
-        handleRetrieve();
-        dispatch(updateFilteredResults(filteredResults));
     };
     // Set width of the range to decrease from the right side
     const setRightValue = () => {
@@ -86,6 +85,9 @@ const RangeSliderBlock = ({ step, min, max, type }) => {
                 max={max}
                 value={minVal}
                 step={step}
+                onMouseUp={handleOnMouseAndKeyUp}
+                onKeyUp={handleOnMouseAndKeyUp}
+                onBlur={handleOnMouseAndKeyUp}
                 onChange={handleMinOnChange}
                 className="thumb thumb--left"
                 style={{ zIndex: minVal > max - 100 && "5" }}
@@ -96,6 +98,9 @@ const RangeSliderBlock = ({ step, min, max, type }) => {
                 max={max}
                 value={maxVal}
                 step={step}
+                onMouseUp={handleOnMouseAndKeyUp}
+                onKeyUp={handleOnMouseAndKeyUp}
+                onBlur={handleOnMouseAndKeyUp}
                 onChange={handleMaxOnChange}
                 className="thumb thumb--right"
             />

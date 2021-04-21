@@ -11,6 +11,7 @@ import {
     retrieveStarship,
 } from "../../../redux/actions";
 import VehicleImage from "../../../assets/vehicle.jpeg";
+import { MAX, MIN } from "../../../constants/index";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -42,8 +43,8 @@ const NoDataBlock = ({ type }) => {
 
     const handleOnClick = () => {
         dispatch(removeSortBy());
-        dispatch(addMinPrice(0));
-        dispatch(addMaxPrice(10000000000));
+        dispatch(addMinPrice(MIN));
+        dispatch(addMaxPrice(MAX));
         handleRetrieve();
     };
 
