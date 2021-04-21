@@ -8,10 +8,6 @@ import {
     FormControl,
     Button,
 } from "react-bootstrap";
-import {
-    searchStarWarsStarship,
-    searchStarWarsVehicle,
-} from "../../../redux/services";
 import { searchStarship, searchVehicle } from "../../../redux/actions";
 
 const NavbarBlock = ({ type, searchBar }) => {

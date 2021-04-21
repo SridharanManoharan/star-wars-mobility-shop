@@ -7,7 +7,12 @@ import {
     updateDetails,
 } from "../actions";
 import { retrieveStarWarsVehicle, searchStarWarsVehicle } from "../services";
-import { sortByProperty, minRange, maxRange } from "../../utils";
+import {
+    sortByProperty,
+    minMaxRange,
+    correctDataInArr,
+    findMaxValue,
+} from "../../utils";
 
 const middleware = (retrieveStarWarsVehicle, searchStarWarsVehicle) => (
     store
@@ -23,15 +28,27 @@ const middleware = (retrieveStarWarsVehicle, searchStarWarsVehicle) => (
                     if (sortBy !== "") {
                         result = sortByProperty(result, sortBy.toLowerCase());
                     }
-                    if (minPrice !== "") {
-                        result = minRange(result, "cost_in_credits", minPrice);
-                    }
-                    if (maxPrice !== "") {
-                        result = maxRange(result, "cost_in_credits", maxPrice);
+                    if (minPrice !== "" || maxPrice !== "") {
+                        const maxValue = result.reduce(
+                            (acc, value) =>
+                                Math.max(
+                                    Math.round(acc),
+                                    Math.round(value.cost_in_credits)
+                                ),
+                            0
+                        );
+                        result = minMaxRange(result, "cost_in_credits", {
+                            min: minPrice,
+                            max: maxPrice,
+                            maxValue: maxValue,
+                        });
                     }
                     store.dispatch(
                         updateDetails({
-                            filteredResults: result,
+                            filteredResults: correctDataInArr(
+                                result,
+                                "cost_in_credits"
+                            ),
                             count: count,
                             next: next,
                             previous: previous,
@@ -59,15 +76,27 @@ const middleware = (retrieveStarWarsVehicle, searchStarWarsVehicle) => (
                                 : sortBy.toLowerCase()
                         );
                     }
-                    if (minPrice !== "") {
-                        result = minRange(result, "cost_in_credits", minPrice);
-                    }
-                    if (maxPrice !== "") {
-                        result = maxRange(result, "cost_in_credits", maxPrice);
+                    if (minPrice !== "" || maxPrice !== "") {
+                        const maxValue = result.reduce(
+                            (acc, value) =>
+                                Math.max(
+                                    Math.round(acc),
+                                    Math.round(value.cost_in_credits)
+                                ),
+                            0
+                        );
+                        result = minMaxRange(result, "cost_in_credits", {
+                            min: minPrice,
+                            max: maxPrice,
+                            maxValue: maxValue,
+                        });
                     }
                     store.dispatch(
                         updateDetails({
-                            filteredResults: result,
+                            filteredResults: correctDataInArr(
+                                result,
+                                "cost_in_credits"
+                            ),
                             count: count,
                             next: next,
                             previous: previous,

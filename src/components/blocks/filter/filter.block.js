@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { FaSortAmountUp } from "react-icons/fa";
@@ -14,6 +14,7 @@ import {
     removeMaxPrice,
     updateFilteredResults,
 } from "../../../redux/actions";
+import { findMaxValue } from "../../../utils";
 
 const Wrapper = styled.div`
     margin: 20px auto 0px auto;
@@ -32,12 +33,10 @@ const Wrapper = styled.div`
 const FilterBlock = ({ type }) => {
     const starwars = useSelector((state) => state.starwars);
     const dispatch = useDispatch();
-
+    const [minInp, setMinInp] = useState("");
+    const [maxInp, setMaxInp] = useState("");
     const [maxInpInValid, setMaxInpInValid] = useState(false);
     const [minInpInValid, setMinInpInValid] = useState(false);
-
-    const minInp = useRef(null);
-    const maxInp = useRef(null);
 
     const handleRetrieve = () => {
         if (type === "vehicle") {
@@ -53,41 +52,35 @@ const FilterBlock = ({ type }) => {
         dispatch(updateFilteredResults(starwars.filteredResults));
     };
 
-    const handleMinPrice = () => {
-        const { value } = minInp.current;
+    const handleMinPrice = (e) => {
+        const { value } = e.target;
+        setMinInp(value);
         dispatch(addMinPrice(value));
     };
 
-    const handleMinPriceOnBlur = () => {
-        const { minPrice, maxPrice } = starwars;
-        if (maxPrice !== "" && minPrice > maxPrice) {
-            setMinInpInValid(true);
-            dispatch(addMinPrice(""));
-        } else {
-            setMinInpInValid(false);
-            handleRetrieve();
-            dispatch(updateFilteredResults(starwars.filteredResults));
-        }
-    };
-
-    const handleMaxPrice = () => {
-        const { value } = maxInp.current;
+    const handleMaxPrice = (e) => {
+        const { value } = e.target;
+        setMaxInp(value);
         dispatch(addMaxPrice(value));
     };
 
-    const handleMaxPriceOnBlur = () => {
+    const handleMinMaxPriceOnBlur = () => {
         const { minPrice, maxPrice } = starwars;
-        if (minPrice !== "" && minPrice > maxPrice) {
-            setMaxInpInValid(true);
-            dispatch(addMaxPrice(""));
-        } else {
-            setMaxInpInValid(false);
-            handleRetrieve();
-            dispatch(updateFilteredResults(starwars.filteredResults));
-        }
+        const max =
+            maxPrice == "" ? findMaxValue(starwars.filteredResults) : maxPrice;
+        const min = minPrice == "" ? 0 : minPrice;
+        const checkIsValid = Math.round(min) >= Math.round(max);
+        setMinInpInValid(checkIsValid);
+        setMaxInpInValid(checkIsValid);
+        dispatch(addMinPrice(min));
+        dispatch(addMaxPrice(max));
+        handleRetrieve();
+        dispatch(updateFilteredResults(starwars.filteredResults));
     };
 
     const clearFilter = () => {
+        setMinInp("");
+        setMaxInp("");
         setMinInpInValid(false);
         setMaxInpInValid(false);
         dispatch(removeSortBy());
@@ -148,28 +141,28 @@ const FilterBlock = ({ type }) => {
                         <Col>
                             <Form.Control
                                 data-testid="minInpFilter"
-                                ref={minInp}
                                 onChange={handleMinPrice}
-                                onBlur={handleMinPriceOnBlur}
+                                onBlur={handleMinMaxPriceOnBlur}
                                 type="number"
                                 style={{ maxWidth: "120px" }}
                                 placeholder="Min Cost"
-                                min="0"
-                                value={starwars.minPrice}
+                                min={0}
+                                max={findMaxValue(starwars.filteredResults)}
+                                value={minInp}
                                 isInvalid={minInpInValid}
                             />
                         </Col>
                         <Col>
                             <Form.Control
                                 data-testid="maxInpFilter"
-                                ref={maxInp}
                                 onChange={handleMaxPrice}
-                                onBlur={handleMaxPriceOnBlur}
+                                onBlur={handleMinMaxPriceOnBlur}
                                 type="number"
                                 style={{ maxWidth: "120px" }}
                                 placeholder="Max Cost"
-                                min="0"
-                                value={starwars.maxPrice}
+                                min={0}
+                                max={findMaxValue(starwars.filteredResults)}
+                                value={maxInp}
                                 isInvalid={maxInpInValid}
                             />
                         </Col>

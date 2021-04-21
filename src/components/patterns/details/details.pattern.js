@@ -30,7 +30,6 @@ const DetailsPattern = () => {
             <HeaderBlock />
             <NavbarBlock />
             <Container className="container-md">
-                <FilterBlock type={details.type} />
                 <Row>
                     <DetailsBlock />
                 </Row>

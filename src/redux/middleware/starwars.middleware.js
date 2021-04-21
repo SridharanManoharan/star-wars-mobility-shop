@@ -1,6 +1,11 @@
 import * as TYPES from "../../constants";
 import { retrieve, retrieveSuccess, updateDetails } from "../actions";
-import { sortByProperty, minRange, maxRange } from "../../utils";
+import {
+    sortByProperty,
+    minMaxRange,
+    findMaxValue,
+    correctDataInArr,
+} from "../../utils";
 
 const middleware = () => (store) => (next) => (action) => {
     const { sortBy, minPrice, maxPrice } = store.getState().starwars;
@@ -16,13 +21,29 @@ const middleware = () => (store) => (next) => (action) => {
                         : sortBy.toLowerCase()
                 );
             }
-            if (minPrice !== "") {
-                result = minRange(result, "cost_in_credits", minPrice);
+            if (minPrice !== "" || maxPrice !== "") {
+                const maxValue = result.reduce(
+                    (acc, value) =>
+                        Math.max(
+                            Math.round(acc),
+                            Math.round(value.cost_in_credits)
+                        ),
+                    0
+                );
+                result = minMaxRange(result, "cost_in_credits", {
+                    min: minPrice,
+                    max: maxPrice,
+                    maxValue: maxValue,
+                });
             }
-            if (maxPrice !== "") {
-                result = maxRange(result, "cost_in_credits", maxPrice);
-            }
-            store.dispatch(updateDetails({ filteredResults: result }));
+            store.dispatch(
+                updateDetails({
+                    filteredResults: correctDataInArr(
+                        result,
+                        "cost_in_credits"
+                    ),
+                })
+            );
             store.dispatch(retrieveSuccess());
             break;
         default:

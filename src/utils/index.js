@@ -22,8 +22,8 @@ const sortByProperty = (arr, field) => {
             varB = b[field].toLowerCase();
             return varA > varB ? 1 : -1;
         } else {
-            varA = isNaN(a[field]) ? Infinity : Math.round(a[field]);
-            varB = isNaN(b[field]) ? Infinity : Math.round(b[field]);
+            varA = isNaN(a[field]) ? 0 : Math.round(a[field]);
+            varB = isNaN(b[field]) ? 0 : Math.round(b[field]);
             return varA - varB;
         }
     });
@@ -41,7 +41,7 @@ const maxRange = (arr, field, range) => {
     let sortedArr = arr.concat();
     field = field == "cost" ? "cost_in_credits" : field;
     return sortedArr.filter((elem) => {
-        const cost = isNaN(elem[field]) ? Infinity : elem[field];
+        const cost = isNaN(elem[field]) ? 0 : elem[field];
         return Math.round(cost) <= Math.round(range);
     });
 };
@@ -57,11 +57,47 @@ const minRange = (arr, field, range) => {
     let sortedArr = arr.concat();
     field = field == "cost" ? "cost_in_credits" : field;
     return sortedArr.filter((elem) => {
-        const cost = isNaN(elem[field]) ? Infinity : elem[field];
+        const cost = isNaN(elem[field]) ? 0 : elem[field];
         return Math.round(cost) >= Math.round(range);
     });
 };
 
-export { isEmptyObj, sortByProperty, maxRange, minRange };
+const minMaxRange = (arr, field, range) => {
+    const min = range.min === "" ? 0 : range.min;
+    const max = range.max === "" ? range.maxValue : range.max;
+    let sortedArr = arr.concat();
+    field = field == "cost" ? "cost_in_credits" : field;
+    return sortedArr.filter((elem) => {
+        const cost = isNaN(elem[field]) ? 0 : elem[field];
+        return (
+            Math.round(cost) >= Math.round(min) &&
+            Math.round(cost) <= Math.round(max)
+        );
+    });
+};
+
+const findMaxValue = (arr) => {
+    let sortedArr = arr.concat();
+    return Math.max(...sortedArr.map((elem) => elem["cost_in_credits"]), 0);
+};
+
+const correctDataInArr = (arr, field) => {
+    let sortedArr = arr.concat();
+    sortedArr.map((elem) => {
+        elem[field] = isNaN(elem[field]) ? 0 : Math.round(elem[field]);
+        return elem[field];
+    });
+    return sortedArr;
+};
+
+export {
+    isEmptyObj,
+    correctDataInArr,
+    findMaxValue,
+    sortByProperty,
+    minMaxRange,
+    maxRange,
+    minRange,
+};
 
 export default {};

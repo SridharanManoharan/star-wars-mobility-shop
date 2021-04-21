@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Alert, Button } from "react-bootstrap";
 import styled from "styled-components";
@@ -7,6 +7,8 @@ import {
     removeSortBy,
     removeMinPrice,
     removeMaxPrice,
+    retrieveVehicle,
+    retrieveStarship,
 } from "../../../redux/actions";
 import VehicleImage from "../../../assets/vehicle.jpeg";
 
@@ -24,13 +26,23 @@ const Wrapper = styled.div`
 `;
 
 const NoDataBlock = ({ type }) => {
+    const { pageNumber } = useSelector((state) => state.starwars);
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const handleRetrieve = () => {
+        if (type === "vehicle") {
+            dispatch(retrieveVehicle(pageNumber));
+        } else {
+            dispatch(retrieveStarship(pageNumber));
+        }
+    };
 
     const handleOnClick = () => {
         dispatch(removeSortBy());
         dispatch(removeMaxPrice());
         dispatch(removeMinPrice());
+        handleRetrieve();
         history.push("/");
     };
 
