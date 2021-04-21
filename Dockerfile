@@ -1,17 +1,17 @@
+# build environment
 FROM node:13.12.0-alpine as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY package*.json ./
-RUN npm install
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
 COPY . ./
 RUN npm run build
 
-# Stage 1 - Serve Frontend Assets
-FROM fholzer/nginx-brotli:v1.12.2
-
-WORKDIR /etc/nginx
-ADD nginx.conf /etc/nginx/nginx.conf
-
-COPY --from=build /app/prod /usr/share/nginx/html
+# production environment
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+# new
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
